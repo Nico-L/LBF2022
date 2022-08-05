@@ -1,0 +1,30 @@
+---
+import slugify from 'slugify'
+
+const {leTag} = Astro.props
+
+var data = await fetch(import.meta.env.PUBLIC_CMS + "categories-tags?token=" + import.meta.env.PUBLIC_TOKEN_SITE)
+const categories = await data.json()
+data = await fetch(import.meta.env.PUBLIC_CMS + "tags-articles?token=" + import.meta.env.PUBLIC_TOKEN_SITE)
+const tags = await data.json()
+---
+
+<div class="rounded border border-bleuLBF p-2 my-4 filtre">
+    <div class="h5 border-lbfbleu-700">Filtres par mot clés</div>
+    <p>En cliquant sur les mots clés, vous accéderez aux galeries liées</p>
+    <div class="flex flex-row gap-2 justify-around flex-wrap">
+        {categories.map((categorie) => (
+            <div class="flex flex-col gap-2 justify-around max-w-20pc mx-1">
+                <div class="font-medium text-bleuLBF mr-2 capitalize">{categorie.nom}</div>
+                <select name={categorie.nom} id={categorie.nom} onchange="selectionTag(this)" class="capitalize border border-bleuLBF p-1 rounded">
+                    <option value="tous" selected={leTag === "tous"}>Tous</option>
+                    {tags.filter((tag) => tag.categorie.nom == categorie.nom).map((tag) => (
+                        leTag === tag.tag?
+                            <option value={slugify(tag.tag)} class="capitalize" selected>{tag.tag}</option>
+                            : <option value={slugify(tag.tag)} class="capitalize">{tag.tag}</option>
+                        
+                    ))}
+                </select>
+            </div>
+        ))}
+</div>

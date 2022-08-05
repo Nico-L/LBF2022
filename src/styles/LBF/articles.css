@@ -1,0 +1,340 @@
+.article__banniere {
+    height: 250px;
+}
+
+.article__banniere__img {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+/* mise en page */
+.cdx-marker {
+    @apply bg-bleuLBF p-1 rounded-sm;
+}
+
+.paragraph a {
+    @apply text-lg font-medium text-lbfbleu-800;
+}
+
+.paragraph a:hover {
+  text-decoration: underline;
+}
+
+.paragraph a:after {
+    margin-left: 0.25rem;
+    display: inline-flex;
+    content: url('data:image/svg+xml; utf8, <svg aria-hidden="true" style="color:%2334787b" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 01-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0120.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0020.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 00-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg>'); 
+    width: 16px;
+}
+
+.inline-code {
+    @apply bg-gray-800 text-bleuLBF p-2 rounded;
+}
+
+.list {
+    @apply list-inside;
+    @apply mb-4;
+}
+
+.list li {
+    @apply py-1;
+}
+
+.list__ordered {
+    @apply list-decimal;
+}
+
+.list__unordered li {
+    background-image: url("../images/logos/logoHexagoneSeul.svg");
+    background-size: 20px 20px;
+    background-position: 0px 5px;    /* X-pos Y-pos (from top-left) */
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}
+
+.leLien {
+    @apply text-bleuLBF font-medium my-1 ml-1 truncate;
+}
+
+.twoLines {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1rem;
+    max-height: 2rem;
+    overflow: hidden;
+}
+
+/* gestion images galerie */
+.galerie {
+    width: 100%;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 0.5rem;
+}
+
+.galerie__mobile {
+  overflow: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+.galerie__mobile a {
+    scroll-snap-align: start;
+    min-width: 83.33%;
+}
+
+.galerie__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px; 
+}
+
+.galerie .galerie__6el {
+   grid-column: span 2 / span 2;
+   padding-top: 80%;
+    position: relative;
+}
+
+.galerie .galerie__5el {
+    @apply bg-bleuLBFTT rounded;
+}
+
+.galerie .galerie__5el:nth-child(4) {
+        grid-column: span 3 / span 3;
+        padding-top: 50%;
+        position: relative;
+    }
+
+.galerie .galerie__5el:nth-child(5) {
+        grid-column: span 3 / span 3;
+        padding-top: 50%;
+        position: relative;
+    }
+
+.galerie .galerie__5el:nth-child(-n+3) {
+    grid-column: span 2 / span 2;
+    padding-top: 100%;
+    position: relative;
+}
+
+.galerie .galerie__4el {
+   grid-column: span 3 / span 3;
+   padding-top: 50%;
+    position: relative;
+}
+
+.galerie .galerie__3el {
+   grid-column: span 2 / span 2;
+   padding-top: 100%;
+    position: relative;
+}
+
+.galerie .galerie__2el {
+   grid-column: span 3 / span 3;
+   padding-top: 75%;
+    position: relative;
+}
+
+.galerie .galerie__1el {
+   grid-column: span 6 / span 6;
+   padding-top: 40%;
+    position: relative;
+}
+
+.galerie div picture {
+        position:absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    } 
+
+.galerie a picture {
+        position:absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    /*
+    pour le code highlighting
+    */
+    /*
+ * Based on Plugin: Syntax Highlighter CB
+ * Plugin URI: http://wp.tutsplus.com/tutorials/plugins/adding-a-syntax-highlighter-shortcode-using-prism-js
+ * Description: Highlight your code snippets with an easy to use shortcode based on Lea Verou's Prism.js.
+ * Version: 1.0.0
+ * Author: c.bavota
+ * Author URI: http://bavotasan.comhttp://wp.tutsplus.com/tutorials/plugins/adding-a-syntax-highlighter-shortcode-using-prism-js/ */
+/* http://cbavota.bitbucket.org/syntax-highlighter/  */
+
+/* =====   ===== */
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #fff;
+	text-shadow: 0 1px 1px #000;
+	font-family: Menlo, Monaco, "Courier New", monospace;
+	direction: ltr;
+	text-align: left;
+	word-spacing: normal;
+	white-space: pre;
+	word-wrap: normal;
+	line-height: 1.4;
+	background: none;
+	border: 0;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"] code {
+	float: left;
+	padding: 0 15px 0 0;
+}
+
+pre[class*="language-"],
+:not(pre) > code[class*="language-"] {
+	background: #222;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+        @apply mx-8 p-4;
+
+	overflow: auto;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: 5px 10px;
+	line-height: 1;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #797979;
+}
+
+.token.selector,
+.token.operator,
+.token.punctuation {
+	color: #fff;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.tag,
+.token.boolean {
+	color: #ffd893;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.hex,
+.token.string {
+	color: #B0C975;
+}
+
+.token.property,
+.token.entity,
+.token.url,
+.token.attr-name,
+.token.keyword {
+	color: #c27628;
+}
+
+.token.regex {
+	color: #9B71C6;
+}
+
+.token.entity {
+	cursor: help;
+}
+
+.token.function,
+.token.constant {
+	color: #e5a638;
+}
+
+.token.variable {
+	color: #fdfba8;
+}
+
+.token.number {
+	color: #8799B0;
+}
+
+.token.important,
+.token.deliminator {
+	color: #E45734;
+}
+
+/* Line highlight plugin */
+pre[data-line] {
+	position: relative;
+	padding: 1em 0 1em 3em;
+}
+
+.line-highlight {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin-top: 1em; /* Same as .prism's padding-top */
+	background: rgba(255, 255, 255, .2);
+	pointer-events: none;
+	line-height: inherit;
+	white-space: pre;
+}
+
+.line-highlight:before,
+.line-highlight[data-end]:after {
+	content: attr(data-start);
+	position: absolute;
+	top: .3em;
+	left: .6em;
+	min-width: 1em;
+	padding: 0 .5em;
+	background-color: rgba(255, 255, 255, .3);
+	color: #fff;
+	font: bold 65%/1.5 sans-serif;
+	text-align: center;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	text-shadow: none;
+}
+
+.line-highlight[data-end]:after {
+	content: attr(data-end);
+	top: auto;
+	bottom: .4em;
+}
+
+/* for line numbers */
+.line-numbers-rows {
+	margin: 0;
+}
+
+.line-numbers-rows span {
+	padding-right: 10px;
+	border-right: 3px #d9d336 solid;
+}

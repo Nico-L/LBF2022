@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../../layouts/LayoutGalerie.astro'
+import EnteteGalerie from '../../../components/html/enteteGalerie.astro'
+import ListeGaleries from '../../../components/html/listeGaleries.astro'
+import slugify from 'slugify'
+
+export async function getStaticPaths() {
+    const data = await fetch(import.meta.env.PUBLIC_CMS + "tags-articles?token=" + import.meta.env.PUBLIC_TOKEN_SITE)
+    const tags = await data.json()
+    var retour = []
+    tags.forEach((tag)=> {
+        retour.push({params: {tag:slugify(tag.tag)}})
+    })
+  return retour;
+}
+
+const {tag} = Astro.params
+const data = await fetch(import.meta.env.PUBLIC_CMS + "galeries?token=" + import.meta.env.PUBLIC_TOKEN_SITE)
+const galeries = await data.json()
+var galeriesTag = []
+galeries.forEach((galerie) => {
+    galerie.tags.forEach((gTag)=>{
+        if (slugify(gTag.tag) === tag) {galeriesTag.push(galerie)}
+    })
+})
+const adresseCMS = import.meta.env.PUBLIC_CMS.slice(0, -1)
+---
+
+<BaseLayout title="Galerie">
+    <div class="p-2 max-w-720px">
+        <h3 class="text-lbfbleu-800">La galerie de l'atelier</h3>
+        <p>Vous trouverez sur cette page la liste des travaux de nos adhérents. Chaque page propose une courte description de l'objet ou de l'événement avec quelques photos.</p>
+            <EnteteGalerie leTag={tag}/>
+            <ListeGaleries galeries = {galeriesTag} adresseCMS = {adresseCMS} />
+    </div>
+</BaseLayout>

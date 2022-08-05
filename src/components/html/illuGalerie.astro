@@ -1,0 +1,45 @@
+---
+const {galerie, adresseCMS} = Astro.props
+const nEl = galerie.illustrations.length
+const idGalerie = galerie.id
+const illus = galerie.illustrations.sort(function (a, b) {
+  return a.id - b.id;
+})
+
+import {
+  Picture 
+} from "astro-imagetools/components";
+---
+
+<div class="my-2">
+    <div class="galerie__mobile flex flex-row h-48 flex-nowrap w-full flex-shrink-0 overflow-x-scroll gap-2 sm:hidden">
+        {illus.map((image, index)=> (
+            <a data-fslightbox={'galerie-'+idGalerie+'-mobile'} href={adresseCMS + image.media.url} data-alt={'galerie 1 image '+index}>
+                <Picture
+                    src={adresseCMS + image.media.url}
+                    alt={galerie.titre + " " + index}
+                    sizes="100vw"
+                    layout="fill"
+                    format={["webp", "jpg"]}
+                    placeholder="dominantColor"
+                    />
+            </a>
+        ))}
+    </div>
+    <div class="hidden sm:grid w-full galerie">
+        {illus.map((image, index)=> (
+            <a data-fslightbox={"galerie-"+idGalerie+"-mobile"} href={adresseCMS + image.media.url} data-alt={'galerie 1 image '+index} class={'galerie__'+nEl+'el'}>
+                <Picture
+                    src={adresseCMS + image.media.url}
+                    alt={galerie.titre + " " + index}
+                    sizes="100vw"
+                    layout="fill"
+                    format={["webp", "jpg"]}
+                    placeholder="dominantColor"
+                    />
+            </a>
+        ))}
+    </div>
+    <div class="text-sm text-center mt-1">Cliquer sur une image pour agrandir.</div>
+</div>
+

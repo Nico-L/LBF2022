@@ -1,0 +1,13 @@
+a {
+    @apply no-underline;
+  }
+  
+  a:not(.inactive):hover {
+    background-repeat: no-repeat;
+  }
+  
+  .inactive {
+    pointer-events: none;
+    cursor: default;
+  }
+  

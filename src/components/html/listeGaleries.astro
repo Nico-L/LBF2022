@@ -1,0 +1,86 @@
+---
+import { parse } from 'node-html-parser';
+
+const {galeries, adresseCMS} = Astro.props
+
+import {
+  Picture 
+} from "astro-imagetools/components";
+
+function shortDate(value) {
+    const laDate = new Date(value)
+    const leJour = laDate.getDate();
+    const annee = laDate.getFullYear();
+    var leMois = (laDate.getMonth() + 1).toString()
+    if (leMois.length<2) {
+        leMois = "0" + leMois
+    }
+    return leJour + '/' + leMois + '/' + annee
+}
+
+---
+<div class="flex flex-col md:flex-row flex-wrap gap-2">
+    {galeries.map((galerie)=> (
+
+    <div  class="relative p-2 mb-2 flex-shrink-0 rounded-md border border-lbfbleu-700 w-full">
+        <div class="h4 text-lbfbleu-700 px-2">
+            {galerie.titre}
+        </div>
+        <div class="text-sm px-2 mb-2">Par <span class="text-lbfbleu-800">{galerie.auteur}</span></div>
+        <div class="flex flex-row divide-x divide-lbfbleu-700 justify-between h-120px md:h-240px" >
+            <div class="px-2 flex-shrink-0 text-gray-700 flex justify-center items-center">
+                <div class="md:hidden rounded w-100px h-120px">
+                    <Picture
+                        src={adresseCMS + galerie.illustrations.sort(function (a, b) {
+                                return a.id - b.id;
+                                })[0].media.url}
+                        alt={"Illustration " + galerie.titre}
+                        sizes="100vw"
+                        layout="fill"
+                        format={["webp", "jpg"]}
+                        placeholder="dominantColor"
+                        />
+                </div>
+                <div class="hidden md:block rounded w-320px h-240px">
+                    <Picture
+                        src={adresseCMS + galerie.illustrations.sort(function (a, b) {
+                                return a.id - b.id;
+                                })[0].media.url}
+                        alt={"Illustration " + galerie.titre}
+                        sizes="100vw"
+                        layout="fill"
+                        format={["webp", "jpg"]}
+                        placeholder="dominantColor"
+                        />
+                </div>
+            </div>
+            {galerie.description !== "<p><br></p>"?
+                <div class="px-2 h-full text-sm md:text-base overflow-hidden w-full flex flex-col gap-2 flex-nowrap">
+                        <div class="overflow-hidden">{parse(galerie.description)}</div>
+                        <div class="flex-shrink-0 h-8 md:h-10 md:mt-1">...</div>
+                    </div>
+                :null
+            }
+        </div>
+        <div class="flex flex-row flex-wrap gap-2 my-2">
+            {galerie.tags.length > 0 ?
+                galerie.tags.sort().map((tag) => (
+                    <div class="border-2 border-bleuLBF bg-bleuLBF text-gray-900 text-xs font-medium rounded px-1 flex flex-col">{tag.tag}</div>
+                ))
+                :null
+            }
+        </div>
+        <div class="flex flex-row text-xs gap-2 justify-end mt-2">
+            <div class="flex flex-row">
+                <div class="font-medium text-center text-lbfbleu-700 flex flex-row flex-wrap mr-1">Publié le : </div>
+                <div>{shortDate(galerie.created_at)}</div>
+            </div>
+            <div class="flex flex-row">
+                <div class="font-medium text-lbfbleu-700 flex flex-row flex-wrap mr-1">Dernière mise à jour : </div>
+                <div>{shortDate(galerie.updated_at)}</div>
+            </div>
+        </div>
+        <a href="/galeries/{{ galerie.titre | slug }}/" class="absolute inset-0 w-full h-full cursor-pointer"></a>
+    </div>
+    ))}
+</div>

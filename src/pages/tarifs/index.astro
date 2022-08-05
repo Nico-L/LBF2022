@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../../layouts/Layout.astro'
+
+var data = await fetch(import.meta.env.PUBLIC_CMS + "machines?token=" + import.meta.env.PUBLIC_TOKEN_SITE)
+const lesMachines = await data.json()
+
+const machinesAbonnements = lesMachines.filter((machine) =>  machine.surAbonnement)
+const machinesHoraire = lesMachines.filter((machine) =>  !machine.surAbonnement)
+
+data = await fetch(import.meta.env.PUBLIC_CMS + "abonnements-machines?token=" + import.meta.env.PUBLIC_TOKEN_SITE)
+const abonnements = await data.json()
+
+const et = "et "
+---
+<BaseLayout title="Accueil">
+    <div class="sm:mt-6 mt-12 mx-1 max-w-3xl text-justify">
+        <h1 class="sm:text-3xl text-xl mb-2 text-center">Les tarifs de l'atelier</h1>
+      
+        <div class="flex flex-row justify-center lg:justify-between flex-wrap">
+          <div class="w-84 flex-shrink-0 mx-1 border-2 border-lbforange-600 p-2 rounded flex flex-col my-2">
+            <div class="text-lg text-lbforange-800 font-bold ">Formation machine et logiciel</div>
+            Pour utiliser une machine, vous devez obligatoirement faire une
+            formation. Des créneaux formations en petit groupe sont organisés
+            régulièrement ou en individuel sur rendez-vous. Une formation
+            spécifique par machine.
+            <div class="mx-auto text-center mt-2 font-bold border-2 border-lbforange-200 rounded shadow-md px-1 py-1">15 € la formation <br />durée environ 1h30</div>
+          </div>
+      
+        <div class="w-84 mx-1 border-2 border-lbfvert-500 p-2 rounded flex flex-col my-2">
+            <div class="text-lg text-lbfvert-800 font-bold ">Nos abonnements machines à bois</div>
+            <p>Ces abonnements vous donnent libre accès à :</p>
+            <ul class="list-disc list-inside ml-1">
+                {machinesAbonnements.map((machine) => (
+                    <li> {machine.nom.toLowerCase()}</li>
+                ))}
+            </ul>
+            <p class="mt-2 font-semibold">Nos tarifs :</p>
+            <div class="flex flex-row justify-around mx-auto text-center mt-2 font-bold">
+                {abonnements.abonnements.map((abonnement) => (
+                    abonnement.tarif!==''?
+                    <div class="mx-3 border-2 border-lbfvert-200 rounded shadow-md bg-white px-1 py-1">
+                      <div class="font-bold mt-1">{abonnement.duree}</div>
+                      <div class="font-normal my-1">{abonnement.tarif} €</div>
+                    </div>
+                    :null
+                ))}
+            </div>
+      
+        </div>
+      
+             <div class="w-84 md:w-full mx-1 border-2 border-lbfbleu-400 p-2 md:flex md:flex-row rounded my-2">
+             <div class="flex flex-col justify-center md:w-1/2 md:pr-4 md:border-r-2 md:border-lbfbleu-100 ">
+              <div class="text-lg text-lbfbleu-900 font-bold ">Nos tarifs machines à commande numérique</div>
+              <div>Si la formation est validée, vous pouvez réserver une machine pour
+                l’utiliser. Les animateurs sont là pour vous apporter une aide technique
+                sur l’utilisation de la machine.</div>
+                <div class="text-base">Si besoin de reprise des fichiers CAO important, un accompagnement
+                personnalisé est envisageable en supplément.</div>
+                <div class="mx-auto text-center mt-2 font-bold border-2 border-lbfbleu-200 rounded shadow-md px-1 py-1">Accompagnement CAO<br />30 €/h</div>
+            </div>
+          <div class="hidden md:flex md:flex-col md:w-1/2 md:ml-4">
+            <p>Le coût des machines est fonction de la durée d'occupation.</p>
+                {machinesHoraire.map((machine) => (
+                    <div class="flex flex-row flex-wrap">
+                          <div class="font-medium capitalize"> {machine.nom.toLowerCase()} :&nbsp;</div>
+                          <div class="">
+                              {machine.tarifHoraire}
+                              {machine.tarifHoraire !== "nous contacter" && machine.tarifHoraire !== "tarif libre"?"€/h":""}
+                          </div>
+                      </div>
+                ))}
+          </div>
+          </div>
+      
+        
+        <div class="md:hidden w-84 mx-1 border-2 border-lbfbleu-400 p-2 rounded flex flex-col my-2">
+        <p>Le coût des machines est fonction de la durée d'occupation.</p>
+            {machinesHoraire.map((machine) => (
+                <div class="flex flex-col mt-2">
+                    <div class="font-bold text-center text-lg capitalize"> {machine.nom.toLowerCase()} </div>
+                    <div class="flex flex-row flex-wrap justify-center">
+                        {machine.tarifHoraire}
+                        {machine.tarifHoraire !== "nous contacter" && machine.tarifHoraire !== "tarif libre"?"€/h":""}
+                    </div>
+                </div>
+            ))}
+             <!-- {% for machine in horaireMachines %}
+             <div class="flex flex-col mt-2">
+             <div class="font-bold text-center text-lg"> {{machine.titre}} </div>
+             <div class="flex flex-row flex-wrap justify-center">
+             {% for tarif in machine.lesTarifs.horaire %}
+              <div class="flex-shrink-0 border-2 border-lbfbleu-400 m-1 p-1 shadow-md rounded text-center flex flex-col">
+              <div class="font-bold">{{tarif.tarification}}</div>
+              <div>{{tarif.tarif}} € </div>
+              </div>
+             {% endfor %}
+             </div>
+            </div>
+            {% endfor %} -->
+        </div>
+        </div>
+      </div>
+</BaseLayout>

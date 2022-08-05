@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/Layout.astro'
+import CarteAtelier from '../components/html/carteAtelier.astro'
+
+const maintenant = (new Date('June 1, 2022 03:24:00')).toISOString()
+var data = await fetch(import.meta.env.PUBLIC_CMS + "ateliers?date_gte=" + maintenant + "&_sort=date:ASC&token=" + import.meta.env.PUBLIC_TOKEN_SITE)
+const ateliers = await data.json()
+const adresseCMS = import.meta.env.PUBLIC_CMS.slice(0, -1)
+---
+
+<BaseLayout title="Accueil">
+	<div class="flex flex-row items-stretch flex-wrap justify-around">
+		{ateliers.map((atelier) => (
+
+			<CarteAtelier atelier={atelier} adresseCMS={adresseCMS}/>
+		  ))}
+	</div>
+</BaseLayout>
+

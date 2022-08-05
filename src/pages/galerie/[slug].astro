@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/LayoutGalerie.astro'
+import IlluGalerie from '../../components/html/illuGalerie.astro'
+import slugify from 'slugify'
+import { parse } from 'node-html-parser';
+
+export async function getStaticPaths() {
+    const data = await fetch(import.meta.env.PUBLIC_CMS + "galeries?token=" + import.meta.env.PUBLIC_TOKEN_SITE)
+    const galeries = await data.json()
+    var retour = []
+    galeries.forEach((galerie)=> {
+        retour.push({params: {slug:slugify(galerie.titre)}, props: {galerie}})
+    })
+  return retour;
+}
+
+const {slug} = Astro.params
+const {galerie} = Astro.props
+const adresseCMS = import.meta.env.PUBLIC_CMS.slice(0, -1)
+const leTexte = parse(galerie.description)
+---
+
+<BaseLayout title={galerie.titre}>
+    <div class="p-4 max-w-720px">
+        <div class="text-sm my-1 bedcrumb">
+            <a href="/">Accueil </a> > <a href="/galerie/">Galeries</a> > <a href="/galerie/{slug}/">{galerie.titre}</a>
+        </div>
+        <div class="flex flex-row flex-wrap justify-between items-end">
+            <div class="h3 min-w-3/4 text-lbfbleu-700">{galerie.titre}</div>
+            <div class="text-sm px-2 rounded max-w-1/2">Par <span class="font-medium text-lbfbleu-700">{galerie.auteur}</span></div>
+        </div>
+        <IlluGalerie galerie={galerie} adresseCMS={adresseCMS}/>
+        <div class="text-base description">{leTexte}</div>
+    </div>
+</BaseLayout>
